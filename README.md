@@ -7,3 +7,4 @@ Zaffino, Paolo, et al. "An Open-Source COVID-19 CT Dataset with Automatic Lung T
 
 The license used is APACHE 2.0.
 
+![screenshot](https://raw.githubusercontent.com/pzaffino/SlicerLungDensitySegmentation/main/LungDensitySegmentation_screenshot.png)
