@@ -147,6 +147,14 @@ class LungDensitySegmentationLogic(ScriptedLoadableModuleLogic):
   https://github.com/Slicer/Slicer/blob/master/Base/Python/slicer/ScriptedLoadableModule.py
   """
 
+  def lungSegmentationErrorBox(self):
+    errorMBox = qt.QMessageBox()
+    errorMBox.setIcon(qt.QMessageBox().Critical)
+    errorMBox.setWindowTitle("Error")
+    errorMBox.setText("Error in lung segmentation")
+    errorMBox.exec()
+
+
   def extract_only_lungs_islands(self, thr_img):
     """
     Extract only lung islands from patient's binary image
@@ -213,8 +221,12 @@ class LungDensitySegmentationLogic(ScriptedLoadableModuleLogic):
         coords[5]=k + margin
         break
 
-    assert coords[0] >= 0 and coords[2] >= 0 and coords[4] >= 0
-    assert coords[1] <= img.shape[0]-1 and coords[3] <= img.shape[1]-1 and coords[5] <= img.shape[2]-1
+    # Error in finding bbox
+    if not ((coords[0] >= 0 and coords[2] >= 0 and coords[4] >= 0) or
+       (coords[1] <= img.shape[0]-1 and coords[3] <= img.shape[1]-1 and coords[5] <= img.shape[2]-1)):
+
+       self.lungSegmentationErrorBox()
+       raise Exception("Error in lung segmentation")
 
     return coords
 
@@ -256,7 +268,11 @@ class LungDensitySegmentationLogic(ScriptedLoadableModuleLogic):
     # Binary closing
     closed_bb_lung_mask = self.binary_closing_sitk(bb_lungs_mask, [30, 20])
 
-    assert closed_bb_lung_mask.sum() > 1000
+    # Error in lung segmentation
+    if not closed_bb_lung_mask.sum() > 1000:
+        self.lungSegmentationErrorBox()
+        raise Exception("Error in lung segmentation")
+
 
     # Undo bounding box
     closed_lung_mask = np.zeros_like(lungs_mask, dtype=np.uint8)
