@@ -132,7 +132,7 @@ class LungDensitySegmentationWidget(ScriptedLoadableModuleWidget):
 
 
   def onApplyButton(self):
-    self.logic.run(self.CTSelector.currentNode().GetName(), self.outputSelector.currentNode(), self.averagedOutputSelector.currentNode())
+    self.logic.run(self.CTSelector.currentNode(), self.outputSelector.currentNode(), self.averagedOutputSelector.currentNode())
 #
 # LungDensitySegmentationLogic
 #
@@ -281,7 +281,7 @@ class LungDensitySegmentationLogic(ScriptedLoadableModuleLogic):
     return closed_lung_mask
 
 
-  def run(self, CTVolumeName, outputVolume, averagedOutputVolume):
+  def run(self, CTVolume, outputVolume, averagedOutputVolume):
     """
     Run intensity labeling
     """
@@ -300,7 +300,7 @@ class LungDensitySegmentationLogic(ScriptedLoadableModuleLogic):
       import sklearn
 
     # Get sitk/numpy images from Slicer
-    CT_sitk = sitk.Cast(sitkUtils.PullVolumeFromSlicer(CTVolumeName), sitk.sitkFloat32)
+    CT_sitk = sitk.Cast(sitkUtils.PullVolumeFromSlicer(CTVolume.GetName()), sitk.sitkFloat32)
     CT_np = sitk.GetArrayFromImage(CT_sitk)
     CT_np[CT_np<-1000]=-1000
 
@@ -355,5 +355,7 @@ class LungDensitySegmentationLogic(ScriptedLoadableModuleLogic):
     # Show labelmap
     outputVolume = sitkUtils.PushVolumeToSlicer(final_label_sitk, outputVolume)
     averagedOutputVolume = sitkUtils.PushVolumeToSlicer(filtered_label_sitk, averagedOutputVolume)
-    setSliceViewerLayers(background=outputVolume)
+    setSliceViewerLayers(foreground=outputVolume)
+    setSliceViewerLayers(background=CTVolume)
+    setSliceViewerLayers(foregroundOpacity=1.0)
 
