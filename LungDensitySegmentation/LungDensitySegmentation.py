@@ -28,6 +28,7 @@ class LungDensitySegmentation(ScriptedLoadableModule):
     self.parent.helpText = '''
 This module labels lung tissues on basis of intensities.
 The full validation workflow is described in Zaffino, Paolo, et al. "An Open-Source COVID-19 CT Dataset with Automatic Lung Tissue Classification for Radiomics." Bioengineering 8.2 (2021): 26.
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7919807/
 '''
     self.parent.helpText += self.getDefaultModuleDocumentationLink()
     self.parent.acknowledgementText = """ """ # replace with organization, grant and thanks.
