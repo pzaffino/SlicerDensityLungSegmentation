@@ -86,6 +86,7 @@ class LungDensitySegmentationWidget(ScriptedLoadableModuleWidget):
     self.outputSelector.showHidden = False
     self.outputSelector.showChildNodeTypes = False
     self.outputSelector.setMRMLScene(slicer.mrmlScene)
+    self.outputSelector.baseName = "Lung_density_labels"
     self.outputSelector.setToolTip("Select or create a labelmap for lung tissue classification")
     parametersFormLayout.addRow("Output labelmap: ", self.outputSelector)
 
@@ -102,6 +103,7 @@ class LungDensitySegmentationWidget(ScriptedLoadableModuleWidget):
     self.averagedOutputSelector.showHidden = False
     self.averagedOutputSelector.showChildNodeTypes = False
     self.averagedOutputSelector.setMRMLScene(slicer.mrmlScene)
+    self.averagedOutputSelector.baseName = "Lung_density_averaged_labels"
     self.averagedOutputSelector.setToolTip("Select or create a labelmap for averaged lung tissue classification")
     parametersFormLayout.addRow("Averaged output labelmap: ", self.averagedOutputSelector)
 
