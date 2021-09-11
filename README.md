@@ -8,7 +8,7 @@ https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7919807/
 
 The license used is APACHE 2.0.
 
-![screenshot](https://raw.githubusercontent.com/pzaffino/SlicerLungDensitySegmentation/main/LungDensitySegmentation_screenshot.png)
+![screenshot](https://raw.githubusercontent.com/pzaffino/SlicerDensityLungSegmentation/main/LungDensitySegmentation_screenshot.png)
 
 ## Module description
 
