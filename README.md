@@ -9,3 +9,7 @@ https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7919807/
 The license used is APACHE 2.0.
 
 ![screenshot](https://raw.githubusercontent.com/pzaffino/SlicerLungDensitySegmentation/main/LungDensitySegmentation_screenshot.png)
+
+## Module description
+
+### Lung CT GMM Segmentation: This module, given a chest CT, labels lung tissue by fitting the intensities with a Gaussian Mixture Model already available. It can be used for pneumonia (COVID-19 too).
