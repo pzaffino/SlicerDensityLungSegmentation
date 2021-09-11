@@ -21,7 +21,7 @@ class LungCTGMMSegmentation(ScriptedLoadableModule):
 
   def __init__(self, parent):
     ScriptedLoadableModule.__init__(self, parent)
-    self.parent.title = "Density Lung Segmentation" # TODO make this more human readable by adding spaces
+    self.parent.title = "Lung CT GMM Segmentation" # TODO make this more human readable by adding spaces
     self.parent.categories = ["Segmentation"]
     self.parent.dependencies = []
     self.parent.contributors = ["Paolo Zaffino (Magna Graecia University of Catanzaro, Italy)", "Maria Francesca Spadea (Magna Graecia University of Catanzaro, Italy)"] # replace with "Firstname Lastname (Organization)"
