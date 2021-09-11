@@ -12,4 +12,13 @@ The license used is APACHE 2.0.
 
 ## Module description
 
-### Lung CT GMM Segmentation: This module, given a chest CT, labels lung tissue by fitting the intensities with a Gaussian Mixture Model already available. It can be used for pneumonia (COVID-19 too).
+### Lung CT GMM Segmentation
+
+This module, given a chest CT, labels lung tissue by fitting the intensities with a Gaussian Mixture Model already available. It can be used for pneumonia (COVID-19 too).
+
+Tutorial
+
+1. Load chest CT (COVID-19 CTs can be download from https://www.imagenglab.com/newsite/covid-19/ )
+2. Select/create a labelmap for the result
+3. Select/create a labelmap for the averaged result
+4. Click Apply button
