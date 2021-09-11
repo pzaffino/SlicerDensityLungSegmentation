@@ -11,10 +11,10 @@ import sitkUtils
 import scipy.ndimage
 
 #
-# LungDensitySegmentation
+# LungCTGMMSegmentation
 #
 
-class LungDensitySegmentation(ScriptedLoadableModule):
+class LungCTGMMSegmentation(ScriptedLoadableModule):
   """Uses ScriptedLoadableModule base class, available at:
   https://github.com/Slicer/Slicer/blob/master/Base/Python/slicer/ScriptedLoadableModule.py
   """
@@ -32,10 +32,10 @@ The full validation workflow is described in ''' + f'<p> <a href="{"https://www.
     self.parent.acknowledgementText = """ """ # replace with organization, grant and thanks.
 
 #
-# LungDensitySegmentationWidget
+# LungCTGMMSegmentationWidget
 #
 
-class LungDensitySegmentationWidget(ScriptedLoadableModuleWidget):
+class LungCTGMMSegmentationWidget(ScriptedLoadableModuleWidget):
   """Uses ScriptedLoadableModuleWidget base class, available at:
   https://github.com/Slicer/Slicer/blob/master/Base/Python/slicer/ScriptedLoadableModule.py
   """
@@ -126,7 +126,7 @@ class LungDensitySegmentationWidget(ScriptedLoadableModuleWidget):
     self.onSelect()
 
     # Create logic object
-    self.logic = LungDensitySegmentationLogic()
+    self.logic = LungCTGMMSegmentationLogic()
 
   def onSelect(self):
     self.applyButton.enabled = self.CTSelector.currentNode() and self.outputSelector.currentNode() and self.averagedOutputSelector.currentNode()
@@ -135,10 +135,10 @@ class LungDensitySegmentationWidget(ScriptedLoadableModuleWidget):
   def onApplyButton(self):
     self.logic.run(self.CTSelector.currentNode(), self.outputSelector.currentNode(), self.averagedOutputSelector.currentNode())
 #
-# LungDensitySegmentationLogic
+# LungCTGMMSegmentationLogic
 #
 
-class LungDensitySegmentationLogic(ScriptedLoadableModuleLogic):
+class LungCTGMMSegmentationLogic(ScriptedLoadableModuleLogic):
   """This class should implement all the actual
   computation done by your module.  The interface
   should be such that other python code can import
@@ -318,7 +318,7 @@ class LungDensitySegmentationLogic(ScriptedLoadableModuleLogic):
     lungs = np.delete(CT_flatten, indexes_to_remove)
 
     # Run GMM
-    gmm_model_fn = __file__.replace("LungDensitySegmentation.py", "Resources%sGMM_parameters_COVID-19.joblib" % (os.sep))
+    gmm_model_fn = __file__.replace("LungCTGMMSegmentation.py", "Resources%sGMM_parameters_COVID-19.joblib" % (os.sep))
     gmm = joblib.load(gmm_model_fn)
     gmm_labels = gmm.predict(lungs.reshape(-1,1)).reshape(lungs.shape)
 

@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-set(MODULE_NAME LungDensitySegmentation)
+set(MODULE_NAME LungCTGMMSegmentation)
 
 #-----------------------------------------------------------------------------
 set(MODULE_PYTHON_SCRIPTS

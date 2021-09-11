@@ -19,7 +19,7 @@ include(${Slicer_USE_FILE})
 
 #-----------------------------------------------------------------------------
 # Extension modules
-add_subdirectory(LungDensitySegmentation)
+add_subdirectory(LungCTGMMSegmentation)
 ## NEXT_MODULE
 
 #-----------------------------------------------------------------------------
