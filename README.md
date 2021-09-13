@@ -1,4 +1,4 @@
-# SlicerLungDensitySegmentation
+# SlicerDensityLungSegmentation
 This extension labels lung tissues on basis of density.
 Voxel-per-voxel label is provided alongside with an averaged volume.
 
