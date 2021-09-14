@@ -101,7 +101,7 @@ class LungCTGMMSegmentationWidget(ScriptedLoadableModuleWidget):
     self.averagedOutputSelector.showHidden = False
     self.averagedOutputSelector.showChildNodeTypes = False
     self.averagedOutputSelector.setMRMLScene(slicer.mrmlScene)
-    self.averagedOutputSelector.baseName = "Lung density averaged segmentation"
+    self.averagedOutputSelector.baseName = "Averaged lung density segmentation"
     self.averagedOutputSelector.setToolTip("Select or create a segmentation for averaged lung tissue classification")
     parametersFormLayout.addRow("Averaged output segmentation: ", self.averagedOutputSelector)
 
@@ -363,9 +363,19 @@ class LungCTGMMSegmentationLogic(ScriptedLoadableModuleLogic):
     slicer.modules.segmentations.logic().ImportLabelmapToSegmentationNode(final_label_slicer, outputSegmentation)
     outputSegmentation.CreateClosedSurfaceRepresentation()
     slicer.mrmlScene.RemoveNode(final_label_slicer)
+    outputSegmentation.GetSegmentation().GetNthSegment(0).SetName("Air")
+    outputSegmentation.GetSegmentation().GetNthSegment(1).SetName("Healthy lungs")
+    outputSegmentation.GetSegmentation().GetNthSegment(2).SetName("Ground glass opacity")
+    outputSegmentation.GetSegmentation().GetNthSegment(3).SetName("Consolidation")
+    outputSegmentation.GetSegmentation().GetNthSegment(4).SetName("Other denser tissues")
 
     slicer.modules.segmentations.logic().ImportLabelmapToSegmentationNode(filtered_label_slicer, averagedOutputSegmentation)
     averagedOutputSegmentation.CreateClosedSurfaceRepresentation()
     slicer.mrmlScene.RemoveNode(filtered_label_slicer)
+    averagedOutputSegmentation.GetSegmentation().GetNthSegment(0).SetName("Air")
+    averagedOutputSegmentation.GetSegmentation().GetNthSegment(1).SetName("Healthy lungs")
+    averagedOutputSegmentation.GetSegmentation().GetNthSegment(2).SetName("Ground glass opacity")
+    averagedOutputSegmentation.GetSegmentation().GetNthSegment(3).SetName("Consolidation")
+    averagedOutputSegmentation.GetSegmentation().GetNthSegment(4).SetName("Other denser tissues")
 
 
