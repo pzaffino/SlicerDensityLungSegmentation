@@ -76,7 +76,7 @@ class LungCTGMMSegmentationWidget(ScriptedLoadableModuleWidget):
     #
 
     self.outputSelector = slicer.qMRMLNodeComboBox()
-    self.outputSelector.nodeTypes = ["vtkMRMLLabelMapVolumeNode"]
+    self.outputSelector.nodeTypes = ["vtkMRMLSegmentationNode"]
     self.outputSelector.selectNodeUponCreation = True
     self.outputSelector.addEnabled = True
     self.outputSelector.removeEnabled = True
@@ -84,16 +84,16 @@ class LungCTGMMSegmentationWidget(ScriptedLoadableModuleWidget):
     self.outputSelector.showHidden = False
     self.outputSelector.showChildNodeTypes = False
     self.outputSelector.setMRMLScene(slicer.mrmlScene)
-    self.outputSelector.baseName = "Lung_density_labels"
-    self.outputSelector.setToolTip("Select or create a labelmap for lung tissue classification")
-    parametersFormLayout.addRow("Output labelmap: ", self.outputSelector)
+    self.outputSelector.baseName = "Lung density segmentation"
+    self.outputSelector.setToolTip("Select or create a segmentation for lung tissue classification")
+    parametersFormLayout.addRow("Output segmentation: ", self.outputSelector)
 
     #
     # Averaged output volume selector
     #
 
     self.averagedOutputSelector = slicer.qMRMLNodeComboBox()
-    self.averagedOutputSelector.nodeTypes = ["vtkMRMLLabelMapVolumeNode"]
+    self.averagedOutputSelector.nodeTypes = ["vtkMRMLSegmentationNode"]
     self.averagedOutputSelector.selectNodeUponCreation = True
     self.averagedOutputSelector.addEnabled = True
     self.averagedOutputSelector.removeEnabled = True
@@ -101,14 +101,14 @@ class LungCTGMMSegmentationWidget(ScriptedLoadableModuleWidget):
     self.averagedOutputSelector.showHidden = False
     self.averagedOutputSelector.showChildNodeTypes = False
     self.averagedOutputSelector.setMRMLScene(slicer.mrmlScene)
-    self.averagedOutputSelector.baseName = "Lung_density_averaged_labels"
-    self.averagedOutputSelector.setToolTip("Select or create a labelmap for averaged lung tissue classification")
-    parametersFormLayout.addRow("Averaged output labelmap: ", self.averagedOutputSelector)
+    self.averagedOutputSelector.baseName = "Lung density averaged segmentation"
+    self.averagedOutputSelector.setToolTip("Select or create a segmentation for averaged lung tissue classification")
+    parametersFormLayout.addRow("Averaged output segmentation: ", self.averagedOutputSelector)
 
     #
     # Apply Button
     #
-    self.applyButton = qt.QPushButton("Apply (it can takes a few minutes)")
+    self.applyButton = qt.QPushButton("Apply (it can take some minutes)")
     self.applyButton.toolTip = "Run the algorithm."
     self.applyButton.enabled = False
     parametersFormLayout.addRow(self.applyButton)
@@ -282,7 +282,7 @@ class LungCTGMMSegmentationLogic(ScriptedLoadableModuleLogic):
     return closed_lung_mask
 
 
-  def run(self, CTVolume, outputVolume, averagedOutputVolume):
+  def run(self, CTVolume, outputSegmentation, averagedOutputSegmentation):
     """
     Run intensity labeling
     """
@@ -353,10 +353,19 @@ class LungCTGMMSegmentationLogic(ScriptedLoadableModuleLogic):
     filtered_label_sitk = sitk.GetImageFromArray(filtered_label)
     filtered_label_sitk.CopyInformation(CT_sitk)
 
-    # Show labelmap
-    outputVolume = sitkUtils.PushVolumeToSlicer(final_label_sitk, outputVolume)
-    averagedOutputVolume = sitkUtils.PushVolumeToSlicer(filtered_label_sitk, averagedOutputVolume)
-    setSliceViewerLayers(foreground=outputVolume)
-    setSliceViewerLayers(background=CTVolume)
-    setSliceViewerLayers(foregroundOpacity=1.0)
+    # Create labelmaps
+    final_label_slicer = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLLabelMapVolumeNode")
+    final_label_slicer = sitkUtils.PushVolumeToSlicer(final_label_sitk, final_label_slicer)
+    filtered_label_slicer = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLLabelMapVolumeNode")
+    filtered_label_slicer = sitkUtils.PushVolumeToSlicer(filtered_label_sitk, filtered_label_slicer)
+
+    # Convert labelmaps to segmentations
+    slicer.modules.segmentations.logic().ImportLabelmapToSegmentationNode(final_label_slicer, outputSegmentation)
+    outputSegmentation.CreateClosedSurfaceRepresentation()
+    slicer.mrmlScene.RemoveNode(final_label_slicer)
+
+    slicer.modules.segmentations.logic().ImportLabelmapToSegmentationNode(filtered_label_slicer, averagedOutputSegmentation)
+    averagedOutputSegmentation.CreateClosedSurfaceRepresentation()
+    slicer.mrmlScene.RemoveNode(filtered_label_slicer)
+
 
