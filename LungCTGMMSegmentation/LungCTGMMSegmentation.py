@@ -28,7 +28,7 @@ class LungCTGMMSegmentation(ScriptedLoadableModule):
     self.parent.helpText = '''
 This module labels lung tissues on basis of intensities.
 The full validation workflow is described in ''' + f'<p> <a href="{"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7919807/"}">this article</a>.</p>'
-    self.parent.helpText += self.getDefaultModuleDocumentationLink()
+    self.parent.helpText += f'<p>For more information see the <a href="{"https://github.com/pzaffino/SlicerDensityLungSegmentation"}">online documentation</a>.</p>'
     self.parent.acknowledgementText = """ """ # replace with organization, grant and thanks.
 
 #

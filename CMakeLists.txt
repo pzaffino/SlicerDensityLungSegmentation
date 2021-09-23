@@ -4,12 +4,12 @@ project(DensityLungSegmentation)
 
 #-----------------------------------------------------------------------------
 # Extension meta-information
-set(EXTENSION_HOMEPAGE "https://www.slicer.org/wiki/Documentation/Nightly/Extensions/DensityLungSegmentation")
+set(EXTENSION_HOMEPAGE "https://github.com/pzaffino/SlicerDensityLungSegmentation")
 set(EXTENSION_CATEGORY "Segmentation")
 set(EXTENSION_CONTRIBUTORS "Paolo Zaffino (Magna Graecia University of Catanzaro, Italy), Maria Francesca Spadea (Magna Graecia University of Catanzaro, Italy)")
-set(EXTENSION_DESCRIPTION "This extenson labels lung tissues on basis of density")
-set(EXTENSION_ICONURL "https://raw.githubusercontent.com/pzaffino/SlicerDensityLungSegmentation/main/LungDensitySegmentation.png")
-set(EXTENSION_SCREENSHOTURLS "https://raw.githubusercontent.com/pzaffino/SlicerDensityLungSegmentation/main/LungDensitySegmentation_screenshot.png")
+set(EXTENSION_DESCRIPTION "This extension labels lung tissues on basis of density (air, healthy, ground-glass opacities, consolidation, and denser tissues). Voxel-per-voxel label is provided alongside with an averaged volume.")
+set(EXTENSION_ICONURL "https://raw.githubusercontent.com/pzaffino/SlicerDensityLungSegmentation/main/DensityLungSegmentation.png")
+set(EXTENSION_SCREENSHOTURLS "https://raw.githubusercontent.com/pzaffino/SlicerDensityLungSegmentation/main/DensityLungSegmentation_screenshot.png")
 set(EXTENSION_DEPENDS "NA") # Specified as a space separated string, a list or 'NA' if any
 
 #-----------------------------------------------------------------------------
